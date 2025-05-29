@@ -171,19 +171,18 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
 
       {/* Bottom-Sheet Panel */}
       <div
-        className="fixed inset-x-0 bottom-0 h-[90vh] max-h-[90vh] w-full max-w-2xl flex flex-col bg-white dark:bg-[#0f0b22] rounded-t-2xl shadow-2xl z-50"
+        className="fixed inset-x-0 bottom-0 h-[80vh] w-full max-w-2xl mx-auto flex flex-col bg-white dark:bg-[#0f0b22] rounded-t-2xl shadow-2xl z-50"
         style={{
           animation: isExiting
             ? "slideOutDown 0.3s ease-out forwards"
             : "slideInUp 0.3s ease-out forwards",
           boxShadow: "0 -4px 24px rgba(0,0,0,0.14)",
+          marginBottom: 0
         }}
       >
         {/* HEADER */}
         <div
-          className={`sticky top-0 z-10 flex items-center justify-between px-4 sm:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8 ${
-            theme === "dark" ? "bg-[#0f0b22] text-white" : "bg-white text-black"
-          }`}
+          className="flex items-center justify-between px-4 sm:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8"
           style={{ borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem" }}
         >
           <button
@@ -198,8 +197,8 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
           <div className="w-10 h-10" />
         </div>
 
-        {/* FORM */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-8 pb-24 hide-scrollbar">
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-8 pb-24">
           <form
             id="feedback-form"
             onSubmit={handleSubmit}
@@ -349,8 +348,8 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
           </form>
         </div>
 
-        {/* Submit Button - Fixed at bottom */}
-        <div className="sticky bottom-0 left-0 right-0 w-full max-w-2xl mx-auto px-4 sm:px-8 py-4 bg-white dark:bg-[#0f0b22] border-t border-gray-200 dark:border-gray-800 z-30">
+        {/* Fixed Submit Button */}
+        <div className="absolute bottom-0 left-0 w-full px-4 sm:px-8 py-4 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0f0b22] dark:via-[#0f0b22] dark:to-transparent">
           <button
             type="submit"
             form="feedback-form"
