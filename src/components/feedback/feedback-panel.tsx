@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowLeft, MessageCircle, CheckCircle } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -45,6 +45,22 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
   const [showSocialModal, setShowSocialModal] = useState(false);
   const [isSocialExiting, setIsSocialExiting] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Check on initial load
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const handleGoBack = () => {
     setIsExiting(true);
@@ -198,7 +214,7 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
         </div>
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-8 pb-24">
+        <div className={`flex-1 overflow-y-auto px-4 sm:px-8 ${isMobile ? 'pb-32' : 'pb-24'}`}>
           <form
             id="feedback-form"
             onSubmit={handleSubmit}
@@ -349,7 +365,11 @@ export default function FeedbackPanel({ isOpen, onClose }: FeedbackPanelProps) {
         </div>
 
         {/* Fixed Submit Button */}
-        <div className="absolute bottom-0 left-0 w-full px-4 sm:px-8 py-4 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0f0b22] dark:via-[#0f0b22] dark:to-transparent">
+        <div className={`fixed bottom-0 left-0 right-0 w-full max-w-2xl mx-auto px-4 sm:px-8 py-4 ${
+          theme === "dark" 
+            ? "bg-gradient-to-t from-[#0f0b22] via-[#0f0b22] to-transparent" 
+            : "bg-gradient-to-t from-white via-white to-transparent"
+        } z-[60]`}>
           <button
             type="submit"
             form="feedback-form"
